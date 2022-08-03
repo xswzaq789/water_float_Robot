@@ -1,3 +1,6 @@
 
 ## file history
-1. (labels.txt), (trash_detect.h5), (trash_detect.tflite) --> 0803
+(b)0803(/b)
+* labels.txt
+* trash_detect.h5
+* trash_detect.tflite
