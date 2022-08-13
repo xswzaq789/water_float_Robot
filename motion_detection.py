@@ -1,7 +1,7 @@
 import tensorflow as tf
 import cv2
 import numpy as np
-
+# example
 thresh = 50
 max_diff = 20
 
