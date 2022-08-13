@@ -1,4 +1,4 @@
-#include<Servo.h>
+#include <Servo.h>
 
 Servo servo;
 
@@ -14,6 +14,14 @@ void setup(){
   }
 void loop()
 {
+  int serail_input = serial.read();
+  if(serial_input == 1){
+    // dc모터 on
+  }
+  else{
+    // dc모터 off
+  }
+  
   long duration, distance;
   
   digitalWrite(trig, LOW);
@@ -29,7 +37,7 @@ void loop()
   Serial.print("거리:");
   Serial.print(distance);
   Serial.println("cm");
-
+  
   if(distance < 50) {
     angle = 75;
     Serial.println("장애물이 있습니다.");
