@@ -11,7 +11,7 @@ void setup() {
 }
 
 void loop() {
-   int a = Serial.read(); //serial 읽어오기
+   int a = Serial.read(); // 라즈베리파이로 부터 serial port 내용 읽어오기 
    delay(100);
 }
 
