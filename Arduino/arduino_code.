@@ -12,6 +12,14 @@ void setup() {
 
 void loop() {
    int a = Serial.read(); // 라즈베리파이로 부터 serial port 내용 읽어오기 
+   
+   if(a == 0){
+      // dc 구동 x 
+   }
+   else{
+    //dc 모동 o
+   }
+   
    delay(100);
 }
 
