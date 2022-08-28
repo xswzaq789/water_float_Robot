@@ -3,8 +3,6 @@
 #define IN1 4
 #define IN2 5
 
-byte speedDC = 255;
-
 void setup(){
   Serial.begin(9600);
   pinMode(ENABLE_A, OUTPUT);
