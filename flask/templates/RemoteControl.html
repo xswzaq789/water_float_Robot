@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>WFR_RC</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../static/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
+            type = "text/javascript"> </script>
+    <script type="text/javascript">
+        var host = "192.168.0.4";
+        var port = 9001;
+        var mqtt;
+
+        function onConnect(){
+            console.log("접속완료");
+        }
+
+        function onFailure(){
+            console.log("접속실패");
+        }
+
+        function sendMsg(msg){
+            alert(msg);
+            message = new Paho.MQTT.Message(msg);
+            message.destinationName = "remote/control";  // topic 설정
+
+            mqtt.send(message);
+        }
+
+        function MQTTConnect(){
+            console.log("mqtt 접속:"+host+","+port);
+
+            mqtt = new Paho.MQTT.Client(host,port,"javascript_client"); // "javascript_client"는 클라이언트 구분을 위한 id
+
+            var options = {
+                timeout:3,
+                onSuccess:onConnect,
+                onFailure:onFailure,
+            }
+            mqtt.connect(options);
+        }
+    </script>
+
+</head>
+
+<body id="page-top">
+    <script type="text/javascript">
+        MQTTConnect()
+    </script>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+       <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../">
+
+                <div class="sidebar-brand-text mx-3">Floating Robot</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                리포트 요약
+            </div>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="../">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>리포트 요약</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                기능
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="../rc"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-wifi"></i>
+                    <span>RC 조종</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="../chart">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>부유물 수거량 통계</span></a>
+            </li>
+
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="name" style="float: right">
+                        <b>水上할 로봇 : </b> 김경미, 박보현, 장예진, 조성원
+                    </div>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-4 text-gray-800"><b>RC 조종</b></h1>
+                    </div>
+
+
+                    <!-- Card that button -->
+                    <div class="row" style="padding:20px;">
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4" >
+                            <a href="../rc" onclick="sendMsg('1')">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+
+                                            <div class="h4 mb-0 font-weight-bold text-gray-900">직진</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-arrow-up fa-2x text-gray-900"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <a href = "../rc" onclick="sendMsg('2')">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 mb-0 font-weight-bold text-gray-900">좌회전</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-arrow-left fa-2x text-gray-900"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <a href = "../rc" onclick="sendMsg('3')">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 mb-0 font-weight-bold text-gray-900">우회전</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-arrow-right fa-2x text-gray-900"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <a href = "../rc" onclick="sendMsg('4')">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 mb-0 font-weight-bold text-gray-900">정지</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-stop fa-2x text-gray-900"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- /.container-fluid -->
+    <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Water Floating Robot</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../static/js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>
